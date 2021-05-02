@@ -1,6 +1,6 @@
 # API GATEWAY ROLE
 
-resource "aws_iam_role" "role-basic-api" {
+resource "aws_iam_role" "role_apigateway" {
   name = "BasicApiRole"
 
   assume_role_policy = <<EOF
@@ -22,8 +22,8 @@ EOF
 
 # API GATEWAY POLICY
 
-resource "aws_iam_policy" "policy-basic-api-queue" {
-  name = "PolicyBasicApiQueue"
+resource "aws_iam_policy" "policy_apigateway_sqs" {
+  name = "PolicyApiGatewaySQS"
 
   policy = <<EOF
 {
@@ -33,11 +33,17 @@ resource "aws_iam_policy" "policy-basic-api-queue" {
         "Effect": "Allow",
         "Action": [
           "logs:CreateLogGroup",
-          "logs:CreateLogStream",
-          "logs:PutLogEvents",
-          "logs:GetLogEvents"
+                "logs:CreateLogStream",
+                "logs:DescribeLogGroups",
+                "logs:DescribeLogStreams",
+                "logs:PutLogEvents",
+                "logs:GetLogEvents",
+                "logs:FilterLogEvents"
         ],
-        "Resource": "${aws_api_gateway_rest_api.basic-api.arn}"
+        "Resource":[
+              "${aws_cloudwatch_log_group.apigateway_log_group.arn}:*",
+              "arn:aws:logs:*:*:log-group:/aws/apigateway/*:*"
+        ]
       },
       {
         "Effect": "Allow",
@@ -51,9 +57,9 @@ resource "aws_iam_policy" "policy-basic-api-queue" {
 EOF
 }
 
-# LAMBDAS ROLE
+# LAMBDA ROLE
 
-resource "aws_iam_role" "role_lambdas" {
+resource "aws_iam_role" "role_lambda_sqs" {
   name = "LambdasRole"
 
   assume_role_policy = <<EOF
@@ -75,7 +81,7 @@ EOF
 
 # LAMBDA POLICY
 
-resource "aws_iam_policy" "policy-lambda-queue" {
+resource "aws_iam_policy" "policy_lambda" {
   name = "PolicyQueueLambda"
 
   policy = <<EOF
@@ -87,15 +93,16 @@ resource "aws_iam_policy" "policy-lambda-queue" {
         "Action": [
           "logs:CreateLogGroup",
           "logs:CreateLogStream",
-          "logs:PutLogEvents",
-          "logs:GetLogEvents"
+          "logs:PutLogEvents"
         ],
-        "Resource": "${aws_lambda_function.basic_lambda.arn}"
+        "Resource": "${aws_cloudwatch_log_group.hello_lambda_log_group.arn}:*"
       },
       {
         "Effect": "Allow",
         "Action": [
-          "sqs:*"
+          "sqs:DeleteMessage",
+          "sqs:ReceiveMessage",
+          "sqs:GetQueueAttributes"
         ],
         "Resource": "${aws_sqs_queue.queue.arn}"
       }
@@ -104,12 +111,14 @@ resource "aws_iam_policy" "policy-lambda-queue" {
 EOF
 }
 
-resource "aws_iam_role_policy_attachment" "basic-api-queue-policy-attachment" {
-  role       = aws_iam_role.role-basic-api.name
-  policy_arn = aws_iam_policy.policy-basic-api-queue.arn
+# POLICY ATTACHMENTS
+
+resource "aws_iam_role_policy_attachment" "apigateway_sqs_policy_attachment" {
+  role       = aws_iam_role.role_apigateway.name
+  policy_arn = aws_iam_policy.policy_apigateway_sqs.arn
 }
 
-resource "aws_iam_role_policy_attachment" "lambda-queue-policy-attachment" {
-  role       = aws_iam_role.role_lambdas.name
-  policy_arn = aws_iam_policy.policy-lambda-queue.arn
+resource "aws_iam_role_policy_attachment" "lambda_policy_attachment" {
+  role       = aws_iam_role.role_lambda_sqs.name
+  policy_arn = aws_iam_policy.policy_lambda.arn
 }

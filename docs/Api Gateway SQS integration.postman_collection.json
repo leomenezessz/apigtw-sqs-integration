@@ -1,0 +1,63 @@
+{
+	"info": {
+		"_postman_id": "44efd0f3-6837-4a9d-874f-a6954510edec",
+		"name": "Api Gateway SQS integration",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "resouce one",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\n    \"id\" : 999,\n    \"message\" : \"Hello!\",\n    \"value\" : 16.99\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/dev/one",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"dev",
+						"one"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "resouce two",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\n    \"id\" : \"999\",\n    \"message\" : \"Hello!\",\n    \"value\" : \"16.99\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/dev/two",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"dev",
+						"two"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

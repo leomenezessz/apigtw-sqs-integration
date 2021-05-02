@@ -12,3 +12,15 @@ variable "profile" {
   default     = "default"
   description = "Default Profile"
 }
+
+variable "lambda_name" {
+  default = "hello"
+}
+
+variable "apigateway_name" {
+  default = "BasicApi"
+}
+
+variable "stage_name" {
+  default = "dev"
+}
