@@ -1,10 +1,10 @@
 # apigtw-sqs-integration
 
-This project is a basic sample of API gateway integration with an SQS queue.
+This project is a basic sample of API gateway integration with a SQS queue.
 
 ## Architecture
 
-Above have an architecture draw with the resources communications.
+Below is an architectural drawing with resource communications.
 
 ![architecture](./docs/apigtw-sqs-integration.jpeg)
 
@@ -47,13 +47,13 @@ Make a plan in the project root directory. *(optional)*
 $ terraform plan
 ```
 
-Do an apply to create all resources.
+Run apply to create all the resources.
 
 ```bash
 $ terraform apply
 ```
 
-After applying the output show API gateway endpoints resources.
+After applying, the output shows the API gateway endpoints resources.
 
 ```bash
 Outputs:
@@ -63,11 +63,11 @@ apigateway_resource_two = https://id.execute-api.us-east-1.amazonaws.com/dev/two
 ```
 
 ## Invoking API
-To invoking your api gateway and test your infrastructure import the **collection** and **environment** from the **docs** folder and set your api gateway id generated from apply.
+To invoke your api gateway and test your infrastructure, import the **collection** and **environment** from the **docs** folder and set your api gateway id generated from apply.
 
 ## Destroy
 
-To destroy all your infrastructure just run terraform destroy.
+To destroy all your infrastructure, just run terraform destroy.
 
 ```bash
 $ terraform destroy
