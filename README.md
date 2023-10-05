@@ -3,7 +3,7 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-This project is a basic sample of API gateway integration with a SQS queue and a lambda consumer.
+This project is a basic sample of api gateway integration with a SQS queue and a lambda consumer.
 
 ## Architecture
 
