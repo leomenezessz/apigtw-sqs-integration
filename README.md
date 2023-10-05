@@ -1,6 +1,6 @@
 # apigtw-sqs-integration
 
-This project is a basic sample of API gateway integration with a SQS queue and a lambda consumer.
+This project is a basic sample of api gateway integration with a SQS queue and a lambda consumer.
 
 ## Architecture
 
